@@ -185,8 +185,8 @@ function getPokemonSpriteUrl(id, isGif = true) {
     }
 }
 
-// Function to get Tenor search URL for a move
-function getTenorSearchUrl(moveName) {
+// Function to get Tenor search URL for a move with Pokemon name
+function getTenorSearchUrl(moveName, pokemonName = '') {
     // Clean up move name for URL (replace spaces with hyphens, remove special characters)
     const cleanMoveName = moveName
         .toLowerCase()
@@ -195,8 +195,22 @@ function getTenorSearchUrl(moveName) {
         .replace(/-+/g, '-') // Replace multiple hyphens with single
         .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
     
+    // Clean up pokemon name similarly
+    const cleanPokemonName = pokemonName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '') // Remove special characters
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/-+/g, '-') // Replace multiple hyphens with single
+        .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+    
+    // Create search term with pokemon name for more specific results
+    let searchTerm = cleanMoveName;
+    if (cleanPokemonName) {
+        searchTerm = `pokemon-${cleanPokemonName}-${cleanMoveName}`;
+    }
+    
     // Create Tenor search URL
-    return `https://tenor.com/search/${cleanMoveName}-gifs`;
+    return `https://tenor.com/search/${searchTerm}-gifs`;
 }
 
 // Function for backward compatibility (now returns Tenor URL)
