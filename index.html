@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Adventure for Kids!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>🌟 Pokémon Adventure 🌟</h1>
+            <p>Learn about amazing Pokémon!</p>
+        </header>
+
+        <!-- Main Menu Screen -->
+        <div id="main-menu" class="screen active">
+            <h2>Choose Your Pokémon Type!</h2>
+            <div class="type-selection">
+                <button class="type-btn fire" data-type="fire">
+                    🔥 Fire Type
+                </button>
+                <button class="type-btn water" data-type="water">
+                    💧 Water Type
+                </button>
+                <button class="type-btn grass" data-type="grass">
+                    🌿 Grass Type
+                </button>
+                <button class="type-btn electric" data-type="electric">
+                    ⚡ Electric Type
+                </button>
+                <button class="type-btn psychic" data-type="psychic">
+                    🔮 Psychic Type
+                </button>
+                <button class="type-btn ghost" data-type="ghost">
+                    👻 Ghost Type
+                </button>
+            </div>
+        </div>
+
+        <!-- Type Introduction Screen -->
+        <div id="type-intro" class="screen">
+            <button class="back-btn">← Back</button>
+            <div class="intro-content">
+                <h2 id="type-title"></h2>
+                <div id="type-description"></div>
+                <div id="sample-pokemon" class="sample-grid"></div>
+                <button id="start-learning" class="start-btn">Let's Learn More!</button>
+            </div>
+        </div>
+
+        <!-- Pokemon Learning Screen -->
+        <div id="pokemon-learning" class="screen">
+            <button class="back-btn">← Back</button>
+            <div class="learning-content">
+                <h2 id="learning-title"></h2>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <span class="progress-text">1 / 10</span>
+                </div>
+                <div id="current-pokemon" class="pokemon-display">
+                    <div class="pokemon-image">
+                        <img id="pokemon-gif" src="" alt="Pokemon">
+                    </div>
+                    <div class="pokemon-info">
+                        <h3 id="pokemon-name"></h3>
+                        <div class="pokemon-moves">
+                            <h4>Famous Moves:</h4>
+                            <p class="moves-instruction">👆 Click on any move to see cool GIFs!</p>
+                            <ul id="moves-list"></ul>
+                        </div>
+                    </div>
+                </div>
+                <button id="next-pokemon" class="next-btn">Next Pokémon!</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz" class="screen">
+            <div class="quiz-content">
+                <h2>🧠 Quiz Time!</h2>
+                <p>Let's see what you learned!</p>
+                <div id="quiz-question" class="question-container">
+                    <h3 id="question-text"></h3>
+                    <div id="question-options" class="options-grid"></div>
+                </div>
+                <div class="quiz-progress">
+                    <span id="quiz-progress-text">Question 1 of 5</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results" class="screen">
+            <div class="results-content">
+                <h2>🎉 Great Job!</h2>
+                <div id="score-display">
+                    <div class="score-circle">
+                        <span id="final-score">0</span>
+                        <span class="score-total">/ 5</span>
+                    </div>
+                </div>
+                <div id="result-message"></div>
+                <button id="play-again" class="play-again-btn">Play Again!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="pokemon-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
