@@ -419,19 +419,25 @@ sparkleCSS.textContent = `
 
 document.head.appendChild(sparkleCSS);
 
-// Show move animation - now opens Tenor search in new tab
+// Show move animation - now opens Tenor search in new tab with Pokemon name
 function showMoveAnimation(moveName) {
     console.log(`Opening Tenor search for move: ${moveName}`);
     
-    // Get Tenor search URL
-    const tenorUrl = getTenorSearchUrl(moveName);
+    // Get current Pokemon name for more specific search
+    const currentPokemon = gameState.learnedPokemon[gameState.currentPokemonIndex];
+    const pokemonName = currentPokemon ? currentPokemon.name : '';
+    
+    // Get Tenor search URL with Pokemon name
+    const tenorUrl = getTenorSearchUrl(moveName, pokemonName);
+    
+    console.log(`Search URL: ${tenorUrl}`);
     
     // Show confirmation modal for kids
-    showMoveConfirmation(moveName, tenorUrl);
+    showMoveConfirmation(moveName, tenorUrl, pokemonName);
 }
 
 // Show confirmation modal before opening Tenor
-function showMoveConfirmation(moveName, tenorUrl) {
+function showMoveConfirmation(moveName, tenorUrl, pokemonName = '') {
     // Create or update move confirmation modal
     let moveModal = document.getElementById('move-confirmation-modal');
     if (!moveModal) {
@@ -441,22 +447,27 @@ function showMoveConfirmation(moveName, tenorUrl) {
         document.body.appendChild(moveModal);
     }
     
+    // Create display name for the search
+    const displayName = pokemonName ? 
+        `${pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}'s ${moveName}` : 
+        moveName;
+    
     // Create modal content
     moveModal.innerHTML = `
         <div class="move-modal-content">
             <div class="move-modal-header">
-                <h3>✨ ${moveName} GIFs ✨</h3>
+                <h3>✨ ${displayName} GIFs ✨</h3>
                 <button class="close-move-modal">&times;</button>
             </div>
             <div class="move-confirmation-container">
                 <div class="move-placeholder">
                     <div class="move-placeholder-icon">🎬</div>
-                    <div class="move-placeholder-name">${moveName}</div>
-                    <div class="move-placeholder-text">Ready to see awesome ${moveName} GIFs?</div>
+                    <div class="move-placeholder-name">${displayName}</div>
+                    <div class="move-placeholder-text">Ready to see awesome ${pokemonName ? pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1) + ' using ' : ''}${moveName} GIFs?</div>
                 </div>
                 <div class="move-buttons">
                     <button class="view-gifs-btn" data-url="${tenorUrl}">
-                        🚀 View ${moveName} GIFs!
+                        🚀 View ${displayName} GIFs!
                     </button>
                     <button class="cancel-btn" onclick="closeMoveModal()">
                         Maybe Later
@@ -464,8 +475,8 @@ function showMoveConfirmation(moveName, tenorUrl) {
                 </div>
             </div>
             <div class="move-description">
-                <p>This will open a new page with lots of cool ${moveName} animations from Tenor!</p>
-                <small>✨ Perfect for seeing how this move works! ✨</small>
+                <p>This will open a new page with lots of cool ${displayName} animations from Tenor!</p>
+                <small>✨ Perfect for seeing how ${pokemonName ? pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1) + ' uses ' : 'this move works with '}${moveName}! ✨</small>
             </div>
         </div>
     `;
@@ -483,7 +494,10 @@ function showMoveConfirmation(moveName, tenorUrl) {
         const url = e.target.dataset.url;
         window.open(url, '_blank', 'noopener,noreferrer');
         closeMoveModal();
-        showFeedback(`Opening ${moveName} GIFs! 🎬`, 'success');
+        const feedbackMessage = pokemonName ? 
+            `Opening ${pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}'s ${moveName} GIFs! 🎬` :
+            `Opening ${moveName} GIFs! 🎬`;
+        showFeedback(feedbackMessage, 'success');
     });
     
     // Add click outside to close
